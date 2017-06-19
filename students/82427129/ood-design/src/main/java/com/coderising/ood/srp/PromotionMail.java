@@ -4,10 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class PromotionMail {
 
@@ -35,7 +34,7 @@ public class PromotionMail {
 		boolean emailDebug = false;
 
 		PromotionMail pe = new PromotionMail(f, emailDebug);
-
+		System.out.println(pe);
 	}
 
 	public PromotionMail(File file, boolean mailDebug) throws Exception {
@@ -70,7 +69,7 @@ public class PromotionMail {
 		sendMailQuery = "Select name from subscriptions "
 				+ "where product_id= '" + productID + "' " + "and send_mail=1 ";
 
-		System.out.println("loadQuery set");
+		System.out.println("loadQuery set "+sendMailQuery);
 	}
 
 	protected void setSMTPHost() {
@@ -86,7 +85,7 @@ public class PromotionMail {
 		fromAddress = config.getProperty(ConfigurationKeys.EMAIL_ADMIN);
 	}
 
-	protected void setMessage(HashMap userInfo) throws IOException {
+	protected void setMessage(Map<String,Object> userInfo) throws IOException {
 
 		String name = (String) userInfo.get(NAME_KEY);
 
@@ -100,6 +99,7 @@ public class PromotionMail {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(file));
+			br.readLine();
 			String temp = br.readLine();
 			String[] data = temp.split(" ");
 
@@ -120,25 +120,25 @@ public class PromotionMail {
 		this.productDesc = desc;
 	}
 
-	protected void configureEMail(HashMap userInfo) throws IOException {
+	protected void configureEMail(Map<String,Object> userInfo) throws IOException {
 		toAddress = (String) userInfo.get(EMAIL_KEY);
 		if (toAddress.length() > 0)
 			setMessage(userInfo);
 	}
 
-	protected List loadMailingList() throws Exception {
+	protected List<Map<String,Object>> loadMailingList() throws Exception {
 		return DBUtil.query(this.sendMailQuery);
 	}
 
-	protected void sendEMails(boolean debug, List mailingList)
+	protected void sendEMails(boolean debug, List<Map<String,Object>> mailingList)
 			throws IOException {
 
 		System.out.println("开始发送邮件");
 
 		if (mailingList != null) {
-			Iterator iter = mailingList.iterator();
+			Iterator<Map<String, Object>> iter = mailingList.iterator();
 			while (iter.hasNext()) {
-				configureEMail((HashMap) iter.next());
+				configureEMail(iter.next());
 				try {
 					if (toAddress.length() > 0)
 						MailUtil.sendEmail(toAddress, fromAddress, subject,
