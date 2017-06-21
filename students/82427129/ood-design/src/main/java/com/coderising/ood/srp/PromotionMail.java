@@ -69,7 +69,7 @@ public class PromotionMail {
 		sendMailQuery = "Select name from subscriptions "
 				+ "where product_id= '" + productID + "' " + "and send_mail=1 ";
 
-		System.out.println("loadQuery set "+sendMailQuery);
+		System.out.println("loadQuery set " + sendMailQuery);
 	}
 
 	protected void setSMTPHost() {
@@ -85,7 +85,7 @@ public class PromotionMail {
 		fromAddress = config.getProperty(ConfigurationKeys.EMAIL_ADMIN);
 	}
 
-	protected void setMessage(Map<String,Object> userInfo) throws IOException {
+	protected void setMessage(Map<String, Object> userInfo) throws IOException {
 
 		String name = (String) userInfo.get(NAME_KEY);
 
@@ -94,12 +94,10 @@ public class PromotionMail {
 
 	}
 
-	protected void readFile(File file) throws IOException // @02C
-	{
+	protected void readFile(File file) throws IOException {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(file));
-			br.readLine();
 			String temp = br.readLine();
 			String[] data = temp.split(" ");
 
@@ -120,18 +118,19 @@ public class PromotionMail {
 		this.productDesc = desc;
 	}
 
-	protected void configureEMail(Map<String,Object> userInfo) throws IOException {
+	protected void configureEMail(Map<String, Object> userInfo)
+			throws IOException {
 		toAddress = (String) userInfo.get(EMAIL_KEY);
 		if (toAddress.length() > 0)
 			setMessage(userInfo);
 	}
 
-	protected List<Map<String,Object>> loadMailingList() throws Exception {
+	protected List<Map<String, Object>> loadMailingList() throws Exception {
 		return DBUtil.query(this.sendMailQuery);
 	}
 
-	protected void sendEMails(boolean debug, List<Map<String,Object>> mailingList)
-			throws IOException {
+	protected void sendEMails(boolean debug,
+			List<Map<String, Object>> mailingList) throws IOException {
 
 		System.out.println("开始发送邮件");
 
