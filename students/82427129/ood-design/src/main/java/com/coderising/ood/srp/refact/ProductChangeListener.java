@@ -2,6 +2,9 @@ package com.coderising.ood.srp.refact;
 
 import java.util.List;
 
+import com.coderising.ood.srp.refact.entity.EmailObj;
+import com.coderising.ood.srp.refact.entity.Product;
+
 /**
  * 商品变动通知接口
  *

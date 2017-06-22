@@ -1,7 +1,12 @@
-package com.coderising.ood.srp.refact;
+package com.coderising.ood.srp.refact.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.coderising.ood.srp.refact.DBUtil;
+import com.coderising.ood.srp.refact.SubscribeManager;
+import com.coderising.ood.srp.refact.entity.Product;
+import com.coderising.ood.srp.refact.entity.User;
 
 public class SubscribeManagerImpl implements SubscribeManager {
 

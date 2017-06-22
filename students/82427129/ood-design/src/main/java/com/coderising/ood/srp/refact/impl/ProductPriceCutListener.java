@@ -1,4 +1,4 @@
-package com.coderising.ood.srp.refact;
+package com.coderising.ood.srp.refact.impl;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,6 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.coderising.ood.srp.refact.ProductChangeListener;
+import com.coderising.ood.srp.refact.SubscribeManager;
+import com.coderising.ood.srp.refact.entity.EmailObj;
+import com.coderising.ood.srp.refact.entity.Product;
+import com.coderising.ood.srp.refact.entity.User;
 
 /**
  * 实现商品变动接口，商品降价
@@ -39,7 +45,12 @@ public class ProductPriceCutListener implements ProductChangeListener {
 		List<User> users = subscribeManager.getSubUserByProduct(getChangedProducts());
 		EmailObj email = new EmailObj();
 		email.setSubject("您关注的产品降价了");
-		email.setContent("尊敬的  ? , 您关注的产品 ? 降价了，欢迎购买!");
+		try {
+			List<Product> proList = readFile(file);
+			email.setContent("尊敬的  ? , 您关注的产品 "+proList.get(0)+" 降价了，欢迎购买!");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return email;
 	}
 	

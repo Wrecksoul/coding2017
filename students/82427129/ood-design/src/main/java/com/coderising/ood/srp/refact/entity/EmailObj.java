@@ -1,4 +1,5 @@
-package com.coderising.ood.srp.refact;
+package com.coderising.ood.srp.refact.entity;
+
 
 /**
  * 消息类，其实还可以再扩展，如果预计通知的方式不止email一种，可以再次抽象出一个MessageObj，然后面向Message抽象类编程

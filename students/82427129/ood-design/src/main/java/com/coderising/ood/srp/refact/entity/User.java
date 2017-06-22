@@ -1,4 +1,4 @@
-package com.coderising.ood.srp.refact;
+package com.coderising.ood.srp.refact.entity;
 
 public class User {
 	private String userID;

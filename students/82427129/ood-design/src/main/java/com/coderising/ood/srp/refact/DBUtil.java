@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.coderising.ood.srp.refact.entity.User;
+
 public class DBUtil {
 
 	/**
